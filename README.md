@@ -1,7 +1,7 @@
 # Utilitário em golang para subir instâncias EC2 na AWS.
 
 **A ideia é facilitar a criação de máquinas virtuais para teste na AWS sem precisar abrir o console**
-
+**O tipo da instância é t2.micro, ou seja, se encaixa no free-tier da AWS**
 <br>
 
 **Regions:**
