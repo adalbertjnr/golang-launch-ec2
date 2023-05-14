@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -27,11 +28,24 @@ var (
 
 func exibeMenu() int {
 	var selecaoMenu int
-	fmt.Println("Escolha a imagem para a instância")
-	fmt.Println("[1] -> ubuntu")
-	fmt.Println("[2] -> awslinux")
-	fmt.Println("[3] -> redhat")
-	fmt.Scan(&selecaoMenu)
+	for {
+		fmt.Println("Escolha a imagem para a instância")
+		fmt.Println("[1] -> ubuntu")
+		fmt.Println("[2] -> awslinux")
+		fmt.Println("[3] -> redhat")
+		var input string
+		fmt.Scan(&input)
+		selecaoMenu, err = strconv.Atoi(input)
+		if err != nil {
+			fmt.Println("Digite apenas o número do índice!")
+			continue
+		}
+		if selecaoMenu < 1 || selecaoMenu > 3 {
+			fmt.Println("Índice não existe")
+			continue
+		}
+		break
+	}
 	if selecaoMenu == 1 {
 		fmt.Print("Imagem escolhida: ubuntu\n\n")
 	} else if selecaoMenu == 2 {
@@ -46,11 +60,24 @@ func exibeMenu() int {
 
 func exibeRegiao() int {
 	var regiaoMenu int
-	fmt.Println("Escolha a região para a instância")
-	fmt.Println("[1] -> us-east-1")
-	fmt.Println("[2] -> us-west-1")
-	fmt.Println("[3] -> sa-east-1")
-	fmt.Scan(&regiaoMenu)
+	for {
+		fmt.Println("Escolha a região para a instância")
+		fmt.Println("[1] -> us-east-1")
+		fmt.Println("[2] -> us-west-1")
+		fmt.Println("[3] -> sa-east-1")
+		var input string
+		fmt.Scan(&input)
+		regiaoMenu, err = strconv.Atoi(input)
+		if err != nil {
+			println("Digite apenas o número do índice")
+			continue
+		}
+		if regiaoMenu < 1 || regiaoMenu > 3 {
+			fmt.Println("Índice não existe")
+			continue
+		}
+		break
+	}
 	if regiaoMenu == 1 {
 		fmt.Print("Região escolhida us-east-1\n\n")
 	} else if regiaoMenu == 2 {
@@ -99,6 +126,18 @@ func getKey() string {
 	return getKeyName
 }
 
+func validateDelete(ctx context.Context, instanceId string) {
+	fmt.Printf("Deseja deletar a instância %s? y/n\n", instanceId)
+	fmt.Scan(&inputDelete)
+
+	if inputDelete == "y" || inputDelete == "Y" {
+		fmt.Printf("Deletando a instância %s\n\n", instanceId)
+		deleteInstance(ctx, instanceId)
+	} else {
+		fmt.Println("A instância não será deletada!")
+	}
+}
+
 func main() {
 	for {
 		selectedOs = exibeMenu()
@@ -123,15 +162,8 @@ func main() {
 
 		fmt.Printf("Instance IP: %s\n\n", instanceIp)
 
-		fmt.Printf("Deseja deletar a instância %s? y/n\n", instanceId)
-		fmt.Scan(&inputDelete)
+		validateDelete(ctx, instanceId)
 
-		if inputDelete == "y" || inputDelete == "Y" {
-			fmt.Printf("Deletando a instância %s\n\n", instanceId)
-			deleteInstance(ctx, instanceId)
-		} else {
-			fmt.Println("A instância não será deletada!")
-		}
 	}
 
 }
