@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -34,13 +33,13 @@ func exibeMenu() int {
 	fmt.Println("[3] -> redhat")
 	fmt.Scan(&selecaoMenu)
 	if selecaoMenu == 1 {
-		fmt.Println("Imagem escolhida: ubuntu")
+		fmt.Print("Imagem escolhida: ubuntu\n\n")
 	} else if selecaoMenu == 2 {
-		fmt.Println("Imagem escolhida: awslinux")
+		fmt.Print("Imagem escolhida: awslinux\n\n")
 	} else if selecaoMenu == 3 {
-		fmt.Println("Imagem escolhida: redhat")
+		fmt.Print("Imagem escolhida: redhat\n\n")
 	} else {
-		fmt.Println("Imagem não existe!")
+		fmt.Print("Imagem não existe!\n\n")
 	}
 	return selecaoMenu
 }
@@ -53,26 +52,26 @@ func exibeRegiao() int {
 	fmt.Println("[3] -> sa-east-1")
 	fmt.Scan(&regiaoMenu)
 	if regiaoMenu == 1 {
-		fmt.Println("Região escolhida us-east-1")
+		fmt.Print("Região escolhida us-east-1\n\n")
 	} else if regiaoMenu == 2 {
-		fmt.Println("Região escolhida us-west-1")
+		fmt.Print("Região escolhida us-west-1\n\n")
 	} else if regiaoMenu == 3 {
-		fmt.Println("Região escolhida sa-east-1")
+		fmt.Print("Região escolhida sa-east-1\n\n")
 	} else {
-		fmt.Println("Região não existe")
+		fmt.Print("Região não existe\n\n")
 	}
 	return regiaoMenu
 }
 
-func selectOs(os string) {
+func selectOs(os int) {
 	switch os {
-	case "1", "ubuntu":
+	case 1:
 		osType = "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
 		osOwner = "099720109477"
-	case "2", "awslinux":
+	case 2:
 		osType = "al2023-ami-2023.0.20230503.0-kernel-6.1-x86_64"
 		osOwner = "137112412989"
-	case "3", "redhat":
+	case 3:
 		osType = "RHEL-9.0.0_HVM-20230313-x86_64-43-Hourly2-GP2"
 		osOwner = "309956199498"
 	default:
@@ -80,13 +79,13 @@ func selectOs(os string) {
 	}
 }
 
-func selectRegion(reg string) {
+func selectRegion(reg int) {
 	switch reg {
-	case "1", "us-east-1":
+	case 1:
 		regionToLaunch = "us-east-1"
-	case "2", "us-west-1":
+	case 2:
 		regionToLaunch = "us-west-1"
-	case "3", "sa-east-1":
+	case 3:
 		regionToLaunch = "sa-east-1"
 	default:
 		fmt.Println("Digite a região da lista")
@@ -96,17 +95,17 @@ func selectRegion(reg string) {
 func getKey() string {
 	fmt.Printf("Digite o nome da sua chave para SSH:\n")
 	fmt.Scan(&getKeyName)
-	fmt.Printf("Chave SSH escolhida: %s\n", getKeyName)
+	fmt.Printf("Chave SSH escolhida: %s\n\n", getKeyName)
 	return getKeyName
 }
 
 func main() {
 	for {
 		selectedOs = exibeMenu()
-		selectOs(strconv.Itoa(selectedOs))
+		selectOs(selectedOs)
 
 		selectedRegion = exibeRegiao()
-		selectRegion(strconv.Itoa(selectedRegion))
+		selectRegion(selectedRegion)
 
 		getKey()
 
@@ -122,13 +121,13 @@ func main() {
 			os.Exit(1)
 		}
 
-		fmt.Printf("Instance IP: %s\n", instanceIp)
+		fmt.Printf("Instance IP: %s\n\n", instanceIp)
 
 		fmt.Printf("Deseja deletar a instância %s? y/n\n", instanceId)
 		fmt.Scan(&inputDelete)
 
 		if inputDelete == "y" || inputDelete == "Y" {
-			fmt.Printf("Deletando a instância %s", instanceId)
+			fmt.Printf("Deletando a instância %s\n\n", instanceId)
 			deleteInstance(ctx, instanceId)
 		} else {
 			fmt.Println("A instância não será deletada!")
