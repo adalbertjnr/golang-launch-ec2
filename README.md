@@ -21,6 +21,8 @@
 
 **Forma de uso:**
 
+Ter a AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY configuradas no seu ambiente.
+
 Clonar o repositório e executar:
 ```
 go run main.go
