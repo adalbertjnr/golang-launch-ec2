@@ -2,21 +2,22 @@
 
 **A ideia é facilitar a criação de máquinas virtuais para teste na AWS sem precisar abrir o console**
 
-Apenas poucas regiões e imagens linux foram configuradas.
-
 <br>
+
 **Regions:**
 - us-east-1
 - us-west-1
 - sa-east-1
 
 <br>
+
 **Imagens:**
 - ubuntu
 - awslinux
 - redhat
 
 <br>
+
 **Forma de uso:**
 
 Clonar o repositório e executar:
@@ -28,7 +29,9 @@ ou utilizar o binário ec2_launch
 ./ec2_launch
 ```
 <br>
+
 Logo em seguida deverá:
+
 - Escolher a imagem (ubuntu, awslinux ou redhat).
 - Escolher a região (us-east-1, us-west-1 ou sa-east-1).
 - Escolher o nome da chave SSH(Pode ser uma já criada na AWS. Caso não tenha, ele irá criar a chave na AWS e criar a .pem no seu diretório).
